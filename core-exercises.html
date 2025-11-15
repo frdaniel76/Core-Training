@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Core Exercises">
+    <title>Core Stabilization for Back Pain</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: white;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            position: sticky;
+            top: 84px;
+            z-index: 99;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-tab {
+            flex: 1;
+            min-width: 100px;
+            padding: 15px 10px;
+            text-align: center;
+            background: white;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .exercise-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .exercise-card.completed {
+            background: linear-gradient(135deg, #e0f7e9 0%, #c8f0d8 100%);
+            border: 2px solid #4caf50;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .exercise-number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .exercise-card.completed .exercise-number {
+            background: #4caf50;
+        }
+
+        .checkbox {
+            width: 28px;
+            height: 28px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .checkbox.checked {
+            background: #4caf50;
+            border-color: #4caf50;
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .exercise-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .exercise-image {
+            width: 100%;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .exercise-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .video-link {
+            display: inline-block;
+            background: #ff0000;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .video-link::before {
+            content: '▶ ';
+            margin-right: 5px;
+        }
+
+        .exercise-details {
+            margin-top: 15px;
+        }
+
+        .detail-section {
+            margin-bottom: 15px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .detail-text {
+            color: #555;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .key-focus {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .key-focus .detail-label {
+            color: #856404;
+        }
+
+        .sets-reps {
+            background: #e3f2fd;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            color: #1976d2;
+            margin: 15px 0;
+        }
+
+        .timer-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .timer-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.95);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .progress-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .checklist-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .checklist-table th,
+        .checklist-table td {
+            padding: 10px 5px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .checklist-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .checklist-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+            background: #f5f5f5;
+        }
+
+        .day-check {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #667eea;
+            border-radius: 4px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .day-check.checked {
+            background: #4caf50;
+            border-color: #4caf50;
+            position: relative;
+        }
+
+        .day-check.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .week-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .week-btn {
+            padding: 8px 16px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .week-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .info-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .info-card ul {
+            padding-left: 20px;
+        }
+
+        .info-card li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .floating-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .floating-nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 5px;
+            color: #666;
+            font-size: 12px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .floating-nav-item.active {
+            color: #667eea;
+        }
+
+        .floating-nav-icon {
+            font-size: 24px;
+            margin-bottom: 2px;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .exercise-title {
+                font-size: 18px;
+            }
+            
+            .timer-display {
+                font-size: 36px;
+            }
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-content.open {
+            max-height: 2000px;
+        }
+
+        .accordion-toggle {
+            background: #f0f0f0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .no-image-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .no-image-placeholder::before {
+            content: '🎥';
+            display: block;
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏋️ Core Stabilization</h1>
+        <p>Relief for Standing Back Pain</p>
+    </div>
+
+    <div class="content">
+        <div id="exercises-section" class="section active">
+            <!-- Timer -->
+            <div class="timer-container">
+                <h3>Exercise Timer</h3>
+                <div class="timer-display" id="timerDisplay">00:00</div>
+                <div class="timer-buttons">
+                    <button class="btn btn-primary" id="startBtn">Start</button>
+                    <button class="btn btn-secondary" id="resetBtn">Reset</button>
+                </div>
+            </div>
+
+            <!-- Progress Overview -->
+            <div class="progress-section">
+                <h3>Today's Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%">0%</div>
+                </div>
+                <p style="text-align: center; color: #666; margin-top: 10px;">
+                    <span id="completedCount">0</span> of 12 exercises completed
+                </p>
+            </div>
+
+            <!-- Exercise 1: Dead Bug -->
+            <div class="exercise-card" data-exercise="1">
+                <div class="exercise-header">
+                    <div class="exercise-number">1</div>
+                    <div class="checkbox" onclick="toggleExercise(1)"></div>
+                </div>
+                <h2 class="exercise-title">Dead Bug</h2>
+                <div class="sets-reps">8 reps per side × 2 sets</div>
+                <a href="https://www.youtube.com/results?search_query=dead+bug+exercise+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Lie on back with arms extended toward ceiling and legs in tabletop position. Lower opposite arm and leg slowly. Keep lower back flat against floor throughout.</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">Press lower back into floor - this is critical!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 2: Plank -->
+            <div class="exercise-card" data-exercise="2">
+                <div class="exercise-header">
+                    <div class="exercise-number">2</div>
+                    <div class="checkbox" onclick="toggleExercise(2)"></div>
+                </div>
+                <h2 class="exercise-title">Plank with Breath Focus</h2>
+                <div class="sets-reps">20-30 seconds × 2 sets</div>
+                <a href="https://www.youtube.com/results?search_query=forearm+plank+exercise+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Forearm plank position - elbows under shoulders. Body in straight line from head to heels. Inhale through nose (3 sec), exhale slowly (5 sec).</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">Draw belly button toward spine on exhale, breathe steadily</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 3: Side Plank -->
+            <div class="exercise-card" data-exercise="3">
+                <div class="exercise-header">
+                    <div class="exercise-number">3</div>
+                    <div class="checkbox" onclick="toggleExercise(3)"></div>
+                </div>
+                <h2 class="exercise-title">Side Plank</h2>
+                <div class="sets-reps">15-20 seconds per side × 2 sets</div>
+                <a href="https://www.youtube.com/results?search_query=side+plank+exercise+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Lie on side, elbow under shoulder. Stack hips and feet (or knees for modified). Lift hips to create straight line from head to feet.</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">Don't let hips sag - maintain straight body line. Drop bottom knee to mat for easier version.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 4: Bird Dog -->
+            <div class="exercise-card" data-exercise="4">
+                <div class="exercise-header">
+                    <div class="exercise-number">4</div>
+                    <div class="checkbox" onclick="toggleExercise(4)"></div>
+                </div>
+                <h2 class="exercise-title">Bird Dog</h2>
+                <div class="sets-reps">8 reps per side × 2 sets</div>
+                <a href="https://www.youtube.com/results?search_query=bird+dog+exercise+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Start on hands and knees (tabletop position). Extend opposite arm forward and opposite leg back. Hold 3 seconds without rotating spine.</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">Imagine balancing a cup of water on your lower back - keep spine neutral!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 5: Prone Cobra -->
+            <div class="exercise-card" data-exercise="5">
+                <div class="exercise-header">
+                    <div class="exercise-number">5</div>
+                    <div class="checkbox" onclick="toggleExercise(5)"></div>
+                </div>
+                <h2 class="exercise-title">Prone Cobra</h2>
+                <div class="sets-reps">Hold 5 seconds × 8 reps</div>
+                <a href="https://www.youtube.com/results?search_query=prone+cobra+exercise+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Lie face down, arms by sides. Lift chest slightly, squeeze shoulder blades together. Hold position.</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">Long spine, don't crunch neck. Feel upper back muscles working.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 6: Superman -->
+            <div class="exercise-card" data-exercise="6">
+                <div class="exercise-header">
+                    <div class="exercise-number">6</div>
+                    <div class="checkbox" onclick="toggleExercise(6)"></div>
+                </div>
+                <h2 class="exercise-title">Superman</h2>
+                <div class="sets-reps">10 reps × 2 sets</div>
+                <a href="https://www.youtube.com/results?search_query=superman+exercise+back+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Lie face down, arms fully extended forward. Lift both arms and legs simultaneously off floor. Hold for 2-3 seconds.</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">Keep glutes engaged, maintain neutral neck</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 7: Single-Leg Glute Bridge -->
+            <div class="exercise-card" data-exercise="7">
+                <div class="exercise-header">
+                    <div class="exercise-number">7</div>
+                    <div class="checkbox" onclick="toggleExercise(7)"></div>
+                </div>
+                <h2 class="exercise-title">Single-Leg Glute Bridge</h2>
+                <div class="sets-reps">8 reps per side × 2 sets</div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=single+leg+glute+bridge+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Lie on back, one foot flat on floor. Extend other leg straight. Push through heel to lift hips. Hold 5 seconds at top.</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">Don't let pelvis drop to the side - keep hips level!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 8: Clamshells -->
+            <div class="exercise-card" data-exercise="8">
+                <div class="exercise-header">
+                    <div class="exercise-number">8</div>
+                    <div class="checkbox" onclick="toggleExercise(8)"></div>
+                </div>
+                <h2 class="exercise-title">Clamshells</h2>
+                <div class="sets-reps">15 reps per side × 2 sets</div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=clamshell+exercise+glutes+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Side-lying position, knees bent about 90°. Keep feet together. Open top knee without rotating pelvis.</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">Feel the burn in upper outer hip (gluteus medius)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 9: Fire Hydrants -->
+            <div class="exercise-card" data-exercise="9">
+                <div class="exercise-header">
+                    <div class="exercise-number">9</div>
+                    <div class="checkbox" onclick="toggleExercise(9)"></div>
+                </div>
+                <h2 class="exercise-title">Fire Hydrants</h2>
+                <div class="sets-reps">12 reps per side × 2 sets</div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=fire+hydrant+exercise+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Start on hands and knees. Lift bent leg out to side. Keep knee at 90° throughout.</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">Keep hips level, don't lean away from the working side</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 10: 90-90 Breathing -->
+            <div class="exercise-card" data-exercise="10">
+                <div class="exercise-header">
+                    <div class="exercise-number">10</div>
+                    <div class="checkbox" onclick="toggleExercise(10)"></div>
+                </div>
+                <h2 class="exercise-title">90-90 Breathing</h2>
+                <div class="sets-reps">8 slow breaths × 2 sets</div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=90+90+breathing+exercise+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Lie on back, feet elevated on chair. Hips and knees at 90°. Hands on belly and lower ribs. Breathe deeply into sides and back of ribcage.</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">Feel ribs expand 360°. Pelvic floor gently lifts on exhale.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 11: Standing March -->
+            <div class="exercise-card" data-exercise="11">
+                <div class="exercise-header">
+                    <div class="exercise-number">11</div>
+                    <div class="checkbox" onclick="toggleExercise(11)"></div>
+                </div>
+                <h2 class="exercise-title">Standing March with Breath</h2>
+                <div class="sets-reps">10 per leg × 2 sets</div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=standing+march+core+exercise+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Stand tall, shoulders back. March in place slowly. Exhale as each knee lifts (engage pelvic floor + deep abs).</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">This teaches you how to stabilize while moving!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercise 12: Pallof Press -->
+            <div class="exercise-card" data-exercise="12">
+                <div class="exercise-header">
+                    <div class="exercise-number">12</div>
+                    <div class="checkbox" onclick="toggleExercise(12)"></div>
+                </div>
+                <h2 class="exercise-title">Pallof Press</h2>
+                <div class="sets-reps">8 reps per side × 2 sets</div>
+                </div>
+                <a href="https://www.youtube.com/results?search_query=pallof+press+exercise+tutorial" target="_blank" class="video-link">Watch Video Tutorial</a>
+                <div class="exercise-details">
+                    <div class="detail-section">
+                        <span class="detail-label">How to perform:</span>
+                        <p class="detail-text">Stand sideways to resistance band at chest height. Press forward, hold 5 sec, resist rotation. No equipment: Stand tall, brace against imaginary sideways force.</p>
+                    </div>
+                    <div class="key-focus">
+                        <span class="detail-label">🎯 Key Focus:</span>
+                        <p class="detail-text">Entire core cylinder activates to resist rotation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div id="progress-section" class="section">
+            <div class="progress-section">
+                <h3>Weekly Progress</h3>
+                
+                <div class="week-selector" id="weekSelector">
+                    <button class="week-btn active" onclick="selectWeek(1)">Week 1</button>
+                    <button class="week-btn" onclick="selectWeek(2)">Week 2</button>
+                    <button class="week-btn" onclick="selectWeek(3)">Week 3</button>
+                    <button class="week-btn" onclick="selectWeek(4)">Week 4</button>
+                    <button class="week-btn" onclick="selectWeek(5)">Week 5</button>
+                    <button class="week-btn" onclick="selectWeek(6)">Week 6</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="weekCompletions">0</div>
+                        <div class="stat-label">Days This Week</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalDays">0</div>
+                        <div class="stat-label">Total Days</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="currentStreak">0</div>
+                        <div class="stat-label">Current Streak</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="longestStreak">0</div>
+                        <div class="stat-label">Longest Streak</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>📊 Weekly Tracking</h3>
+                <table class="checklist-table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                            <th>Sun</th>
+                        </tr>
+                    </thead>
+                    <tbody id="checklistBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-card">
+                <h3>🎯 Progression Schedule</h3>
+                <p><strong>Weeks 1-2:</strong> Master the movements with perfect form. Use modifications as needed.</p>
+                <p style="margin-top: 10px;"><strong>Weeks 3-4:</strong> Complete all prescribed sets and reps. Start removing modifications.</p>
+                <p style="margin-top: 10px;"><strong>Weeks 5-6:</strong> Increase hold times or add reps. Practice standing stabilization.</p>
+                <p style="margin-top: 10px;"><strong>Week 7+:</strong> Continue challenging yourself and maintain daily consistency.</p>
+            </div>
+        </div>
+
+        <!-- Guide Section -->
+        <div id="guide-section" class="section">
+            <div class="info-card">
+                <h3>💡 Program Overview</h3>
+                <p>This program targets the four muscle groups crucial for core stability and back pain relief:</p>
+                <ul>
+                    <li><strong>Deep Abdominals:</strong> Your natural "corset" that stabilizes the spine</li>
+                    <li><strong>Spinal Extensors:</strong> Keep you upright and control each vertebra</li>
+                    <li><strong>Hip & Gluteal Complex:</strong> Stable base that takes load off your spine</li>
+                    <li><strong>Diaphragm & Pelvic Floor:</strong> Vertical stabilization system</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>⏰ How to Use This App</h3>
+                <ul>
+                    <li>Do the exercises <strong>once daily</strong> (morning OR evening)</li>
+                    <li>Complete the 3-minute warm-up first</li>
+                    <li>Work through all 12 exercises in order</li>
+                    <li>Check off each exercise as you complete it</li>
+                    <li>Use the timer for timed holds</li>
+                    <li>Track your progress in the Progress tab</li>
+                    <li>Takes about 20-25 minutes total</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>🎯 Key Principles</h3>
+                <ul>
+                    <li><strong>Quality over quantity:</strong> Perfect form beats more reps</li>
+                    <li><strong>Breathe consistently:</strong> Never hold your breath</li>
+                    <li><strong>Progress gradually:</strong> Master each exercise before advancing</li>
+                    <li><strong>Stop if pain increases:</strong> Mild discomfort OK, sharp pain is not</li>
+                    <li><strong>Be consistent:</strong> Daily practice yields best results</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>🚨 When to Stop</h3>
+                <p>Stop immediately and consult a healthcare provider if you experience:</p>
+                <ul>
+                    <li>Sharp or shooting pain</li>
+                    <li>Pain that radiates down your leg</li>
+                    <li>Numbness or tingling</li>
+                    <li>Loss of bladder/bowel control</li>
+                    <li>Dizziness or difficulty breathing</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>📈 What to Expect</h3>
+                <p><strong>Week 1:</strong> Exercises feel awkward, muscles sore</p>
+                <p style="margin-top: 8px;"><strong>Week 2-3:</strong> Movements feel more natural, getting stronger</p>
+                <p style="margin-top: 8px;"><strong>Week 4-6:</strong> Noticeable improvement in standing tolerance</p>
+                <p style="margin-top: 8px;"><strong>Week 6+:</strong> Standing 30+ minutes with less pain!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-nav">
+        <button class="floating-nav-item active" onclick="showSection('exercises')">
+            <div class="floating-nav-icon">💪</div>
+            <div>Exercises</div>
+        </button>
+        <button class="floating-nav-item" onclick="showSection('progress')">
+            <div class="floating-nav-icon">📊</div>
+            <div>Progress</div>
+        </button>
+        <button class="floating-nav-item" onclick="showSection('guide')">
+            <div class="floating-nav-icon">📖</div>
+            <div>Guide</div>
+        </button>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timerInterval;
+        let seconds = 0;
+        let isRunning = false;
+
+        document.getElementById('startBtn').addEventListener('click', function() {
+            if (!isRunning) {
+                isRunning = true;
+                this.textContent = 'Pause';
+                timerInterval = setInterval(updateTimer, 1000);
+            } else {
+                isRunning = false;
+                this.textContent = 'Start';
+                clearInterval(timerInterval);
+            }
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            seconds = 0;
+            document.getElementById('startBtn').textContent = 'Start';
+            document.getElementById('timerDisplay').textContent = '00:00';
+        });
+
+        function updateTimer() {
+            seconds++;
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            document.getElementById('timerDisplay').textContent = 
+                String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+        }
+
+        // Exercise completion
+        function toggleExercise(num) {
+            const card = document.querySelector(`.exercise-card[data-exercise="${num}"]`);
+            const checkbox = card.querySelector('.checkbox');
+            
+            card.classList.toggle('completed');
+            checkbox.classList.toggle('checked');
+            
+            // Save to localStorage
+            const completed = Array.from(document.querySelectorAll('.exercise-card.completed'))
+                .map(card => card.dataset.exercise);
+            localStorage.setItem('completedExercises', JSON.stringify(completed));
+            
+            // Update today's completion in tracking
+            const today = new Date().toISOString().split('T')[0];
+            if (completed.length === 12) {
+                markDayComplete(today);
+            }
+            
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = 12;
+            const completed = document.querySelectorAll('.exercise-card.completed').length;
+            const percentage = Math.round((completed / total) * 100);
+            
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressFill').textContent = percentage + '%';
+            document.getElementById('completedCount').textContent = completed;
+        }
+
+        function markDayComplete(date) {
+            let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+            if (!completedDays.includes(date)) {
+                completedDays.push(date);
+                localStorage.setItem('completedDays', JSON.stringify(completedDays));
+                updateStats();
+            }
+        }
+
+        // Section navigation
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.floating-nav-item').forEach(i => i.classList.remove('active'));
+            
+            document.getElementById(section + '-section').classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            if (section === 'progress') {
+                updateStats();
+                generateChecklist();
+            }
+        }
+
+        // Week selection
+        let currentWeek = 1;
+        function selectWeek(week) {
+            currentWeek = week;
+            document.querySelectorAll('.week-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            generateChecklist();
+        }
+
+        // Generate checklist
+        function generateChecklist() {
+            const tbody = document.getElementById('checklistBody');
+            tbody.innerHTML = '';
+            
+            const exercises = ['Dead Bug', 'Plank', 'Side Plank', 'Bird Dog', 'Prone Cobra', 
+                              'Superman', 'Bridge', 'Clamshells', 'Fire Hydrants', 
+                              '90-90 Breath', 'Standing March', 'Pallof Press'];
+            
+            exercises.forEach((exercise, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${exercise}</td>
+                    ${[0,1,2,3,4,5,6].map(day => 
+                        `<td><div class="day-check" onclick="toggleDayCheck(${index}, ${day})"></div></td>`
+                    ).join('')}
+                `;
+                tbody.appendChild(row);
+            });
+            
+            loadChecklistState();
+        }
+
+        function toggleDayCheck(exercise, day) {
+            const key = `week${currentWeek}_ex${exercise}_day${day}`;
+            let checks = JSON.parse(localStorage.getItem('checklistChecks') || '{}');
+            checks[key] = !checks[key];
+            localStorage.setItem('checklistChecks', JSON.stringify(checks));
+            loadChecklistState();
+        }
+
+        function loadChecklistState() {
+            const checks = JSON.parse(localStorage.getItem('checklistChecks') || '{}');
+            document.querySelectorAll('.day-check').forEach((check, index) => {
+                const row = Math.floor(index / 7);
+                const day = index % 7;
+                const key = `week${currentWeek}_ex${row}_day${day}`;
+                if (checks[key]) {
+                    check.classList.add('checked');
+                } else {
+                    check.classList.remove('checked');
+                }
+            });
+        }
+
+        // Stats calculation
+        function updateStats() {
+            const completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+            
+            // Total days
+            document.getElementById('totalDays').textContent = completedDays.length;
+            
+            // Current week completions
+            const weekStart = new Date();
+            weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+            const weekDays = completedDays.filter(day => new Date(day) >= weekStart);
+            document.getElementById('weekCompletions').textContent = weekDays.length;
+            
+            // Calculate streaks
+            const sorted = completedDays.map(d => new Date(d)).sort((a,b) => b - a);
+            let currentStreak = 0;
+            let longestStreak = 0;
+            let tempStreak = 0;
+            
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            
+            for (let i = 0; i < sorted.length; i++) {
+                const date = new Date(sorted[i]);
+                date.setHours(0,0,0,0);
+                
+                if (i === 0) {
+                    const daysDiff = Math.floor((today - date) / (1000*60*60*24));
+                    if (daysDiff <= 1) {
+                        currentStreak = 1;
+                        tempStreak = 1;
+                    }
+                } else {
+                    const prevDate = new Date(sorted[i-1]);
+                    prevDate.setHours(0,0,0,0);
+                    const daysDiff = Math.floor((prevDate - date) / (1000*60*60*24));
+                    
+                    if (daysDiff === 1) {
+                        tempStreak++;
+                        if (i === 1 || currentStreak > 0) {
+                            currentStreak = tempStreak;
+                        }
+                    } else {
+                        tempStreak = 1;
+                    }
+                }
+                
+                longestStreak = Math.max(longestStreak, tempStreak);
+            }
+            
+            document.getElementById('currentStreak').textContent = currentStreak;
+            document.getElementById('longestStreak').textContent = longestStreak;
+        }
+
+        // Load saved state on page load
+        window.addEventListener('load', function() {
+            const completed = JSON.parse(localStorage.getItem('completedExercises') || '[]');
+            completed.forEach(num => {
+                const card = document.querySelector(`.exercise-card[data-exercise="${num}"]`);
+                if (card) {
+                    card.classList.add('completed');
+                    card.querySelector('.checkbox').classList.add('checked');
+                }
+            });
+            updateProgress();
+            updateStats();
+        });
+
+        // Reset completed exercises at midnight
+        function checkMidnightReset() {
+            const lastReset = localStorage.getItem('lastReset');
+            const today = new Date().toISOString().split('T')[0];
+            
+            if (lastReset !== today) {
+                localStorage.removeItem('completedExercises');
+                localStorage.setItem('lastReset', today);
+                location.reload();
+            }
+        }
+        
+        checkMidnightReset();
+        setInterval(checkMidnightReset, 60000); // Check every minute
+    </script>
+</body>
+</html>
